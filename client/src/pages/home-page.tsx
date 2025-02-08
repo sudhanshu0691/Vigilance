@@ -7,8 +7,8 @@ import { AlertCircle } from "lucide-react";
 export default function HomePage() {
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
-      <Alert className="bg-yellow-50 border-yellow-200">
-        <AlertCircle className="h-4 w-4 text-yellow-600" />
+      <Alert className="bg-yellow-50 border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800">
+        <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-500" />
         <AlertTitle>Weather Alert</AlertTitle>
         <AlertDescription>
           Heavy rainfall expected in coastal areas. Please stay informed.
@@ -30,9 +30,11 @@ export default function HomePage() {
           <WeatherCard />
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Latest Updates</h2>
-          <NewsSection />
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold">Latest Updates</h2>
+          <div className="bg-card rounded-lg shadow-md">
+            <NewsSection />
+          </div>
         </section>
       </div>
     </div>
