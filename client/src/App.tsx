@@ -13,6 +13,7 @@ import ContactPage from "@/pages/contact-page";
 import ProfilePage from "@/pages/profile-page";
 import Navbar from "@/components/layout/navbar";
 import { DisasterHelper } from "@/components/chat/disaster-helper";
+import { AlertSystem } from "@/components/alerts/alert-system";
 
 function Router() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <main>
             <Router />
           </main>
+          <AlertSystem />
           <DisasterHelper />
         </div>
         <Toaster />
