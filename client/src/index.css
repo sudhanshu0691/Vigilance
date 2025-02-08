@@ -8,6 +8,25 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased;
+  }
+
+  .dark {
+    --gradient-start: theme('colors.slate.900');
+    --gradient-end: theme('colors.slate.800');
+  }
+
+  .light {
+    --gradient-start: theme('colors.slate.50');
+    --gradient-end: theme('colors.white');
+  }
+
+  body {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    min-height: 100vh;
+  }
+
+  .glass-card {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm;
   }
 }

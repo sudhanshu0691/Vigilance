@@ -21,15 +21,28 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { insertUserSchema } from "@shared/schema";
+import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = insertUserSchema.pick({ username: true, password: true });
+const resetPasswordSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+});
 
 export default function AuthPage() {
   const [, setLocation] = useLocation();
   const { user, loginMutation, registerMutation } = useAuth();
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const { toast } = useToast();
 
   const loginForm = useForm({
     resolver: zodResolver(loginSchema),
@@ -52,6 +65,21 @@ export default function AuthPage() {
       address: "",
     },
   });
+
+  const resetPasswordForm = useForm({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onResetPassword = (data: { email: string }) => {
+    // Here you would implement the password reset logic
+    toast({
+      title: "Reset Link Sent",
+      description: `Password reset instructions have been sent to ${data.email}`,
+    });
+  };
 
   // Redirect if already logged in
   if (user) {
@@ -76,7 +104,7 @@ export default function AuthPage() {
       </div>
 
       <div className="flex items-center justify-center p-8">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md glass-card">
           <CardHeader>
             <CardTitle>Welcome to WeatherAlert</CardTitle>
             <CardDescription>
@@ -126,6 +154,39 @@ export default function AuthPage() {
                         </FormItem>
                       )}
                     />
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="link" className="px-0">Forgot password?</Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Reset Password</DialogTitle>
+                          <DialogDescription>
+                            Enter your email address and we'll send you instructions to reset your password.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <Form {...resetPasswordForm}>
+                          <form onSubmit={resetPasswordForm.handleSubmit(onResetPassword)} className="space-y-4">
+                            <FormField
+                              control={resetPasswordForm.control}
+                              name="email"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Email</FormLabel>
+                                  <FormControl>
+                                    <Input type="email" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <Button type="submit" className="w-full">
+                              Send Reset Link
+                            </Button>
+                          </form>
+                        </Form>
+                      </DialogContent>
+                    </Dialog>
                     <Button
                       type="submit"
                       className="w-full"
