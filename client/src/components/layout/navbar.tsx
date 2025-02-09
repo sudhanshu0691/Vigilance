@@ -8,7 +8,7 @@ export default function Navbar() {
   const { user, logoutMutation } = useAuth();
 
   return (
-    <nav className="bg-primary/10 backdrop-blur-sm border-b border-primary/20">
+    <nav className="bg-white border-b border-red-100 shadow-sm">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/">
@@ -59,7 +59,7 @@ export default function Navbar() {
           <Button 
             variant="outline"
             onClick={() => logoutMutation.mutate()}
-            className="border-primary/20 hover:bg-primary/10"
+            className="border-red-200 hover:bg-red-50"
           >
             Logout
           </Button>
